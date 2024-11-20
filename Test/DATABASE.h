@@ -39,20 +39,20 @@ public:
 
         if (database.empty()) {
             std::cout << "\n\nCan't remove anything. Database is empty\n\n";
+            return;
+        }
+
+        auto index = std::find(database.begin(), database.end(), item);
+
+        if (index != database.end()) {
+
+            database.erase(index);
+            std::cout << "\n\nRemoved " << item.getName() << " from the database\n\n";
         }
         else {
-
-            auto index = std::find(database.begin(), database.end(), item);
-
-            if (index != database.end()) {
-
-                database.erase(index);
-                std::cout << "\n\nRemoved " << item.getName() << " from the database\n\n";
-            }
-            else {
-                std::cout << "\n\n" << item.getName() << " doesn't exist in the database\n\n";
-            }
+            std::cout << "\n\n" << item.getName() << " doesn't exist in the database\n\n";
         }
+ 
     }
 
     void wipeDatabase() {
@@ -75,8 +75,8 @@ public:
         }
     }
 
-    void setFileName(std::string) {
-
+    void setFileName(std::string FileName) {
+        this->FileName = FileName;
     }
 
     void setDatabase(std::vector<T> database) {
@@ -85,6 +85,10 @@ public:
 
     void setDatabaseName(std::string databaseName) {
         this->databaseName = databaseName;
+    }
+
+    std::string getDatabaseName() {
+        return databaseName;
     }
 
     std::string getFileName() {
@@ -139,7 +143,7 @@ template<>
 class DatabaseSaverLoader<Staff> {
 public:
 
-    static void saveDatabase(Database<Staff> database) {
+    static void saveDatabase(Database<Staff>& database) {
 
         std::fstream File(database.getFileName(), std::ios::out);
 
@@ -195,7 +199,7 @@ template<>
 class DatabaseSaverLoader<Customer> {
 public:
 
-    static void saveDatabase(Database<Customer> database) {
+    static void saveDatabase(Database<Customer>& database) {
 
         std::fstream File(database.getFileName(), std::ios::out );
 
@@ -353,12 +357,29 @@ public:
 
 template<>
 class DatabaseSaverLoader<Ticket> {
+public:
+    DatabaseSaverLoader() = delete;
 
+    static void saveDatabase(Database<Ticket>& database) {
+
+    }
+
+    static Database<Ticket> loadDatabase() {
+
+    }
 };
 
 template<>
 class DatabaseSaverLoader<Event> {
+public:
 
+    static void saveDatabase(Database<Ticket>& database) {
+
+    }
+
+    static Database<Event> loadDatabase() {
+
+    }
 };
 
 #endif
