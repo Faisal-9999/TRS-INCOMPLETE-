@@ -2,10 +2,16 @@
 #define TICKET_H
 
 #include <iostream>
-#include "ENTITY.h"
+#include "PURCHASE.h"
 
 class Ticket : public Purchase {
+private:
+	std::string ticketID;
+public:
 
+	std::string getID() {
+		return ticketID;
+	}
 };
 
 class TicketCreator {

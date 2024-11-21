@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "ENTITY.h"
+
 class Purchase : public Entity {
 protected:
 

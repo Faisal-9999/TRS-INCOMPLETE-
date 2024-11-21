@@ -74,7 +74,10 @@ public:
         for (int i = 0; i < database.size(); i++) {
             std::cout << i + 1 << "#: \n\n";
             database[i].displayInfo();
+            std::cout << std::endl;
         }
+
+        std::cout << std::endl;
     }
 
     void setFileName(std::string FileName) {
@@ -161,7 +164,7 @@ public:
         }
     }
 
-    static Database<Staff> loadDatabase(std::string FileName) {
+    static Database<Staff> loadDatabase(std::string& FileName) {
 
         std::fstream File(FileName, std::ios::in);
 
@@ -199,6 +202,10 @@ public:
 
 template<>
 class DatabaseSaverLoader<Customer> {
+private:
+
+    DatabaseSaverLoader() {}
+
 public:
 
     static void saveDatabase(Database<Customer>& database) {
@@ -243,7 +250,8 @@ public:
         }
     }
 
-    static Database<Customer> loadDatabase(std::string FileName) {
+    static Database<Customer> loadDatabase(std::string& FileName) {
+
         std::fstream File(FileName, std::ios::in);
 
         if (!File.is_open()) {
@@ -360,23 +368,48 @@ public:
 
 template<>
 class DatabaseSaverLoader<Ticket> {
+private:
+
+    DatabaseSaverLoader() {}
+
 public:
-    DatabaseSaverLoader() = delete;
+
 
     static void saveDatabase(Database<Ticket>& database) {
+        std::fstream File(database.getFileName(), std::ios::in);
 
+        if (!File.is_open()) {
+            std::cout << "File called " << database.getFileName() << " doesn't exist" << std::endl;
+            std::cout << "Creating File..." << std::endl;
+            File.open(database.getFileName(), std::ios::out);
+        }
+
+        std::vector<Ticket> tickets = database.getDatabase();
+
+        for (int i = 0; i < tickets.size(); i++) {
+            std::string line = tickets[i].getName() + "." + std::to_string(tickets[i].getCost()) + "." + tickets[i].getID();
+            File << line << std::endl;
+        }
     }
 
-    static Database<Ticket> loadDatabase() {
+    static Database<Ticket> loadDatabase(std::string& FileName) {
+        std::fstream File(FileName, std::ios::in);
 
+        if (!File.is_open()) {
+
+        }
     }
 };
 
 template<>
 class DatabaseSaverLoader<Event> {
+private:
+
+    DatabaseSaverLoader() {}
+
 public:
 
-    static void saveDatabase(Database<Ticket>& database) {
+    static void saveDatabase(Database<Event>& database) {
 
     }
 
