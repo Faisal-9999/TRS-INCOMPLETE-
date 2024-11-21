@@ -17,7 +17,7 @@ template<typename T>
 //Review DATABASE CODE AND ADAPT FOR THE CLASSES
 
 class Database {
-protected:
+private:
 
     std::vector<T> database;
     std::string FileName;
@@ -387,7 +387,7 @@ public:
         std::vector<Ticket> tickets = database.getDatabase();
 
         for (int i = 0; i < tickets.size(); i++) {
-            std::string line = tickets[i].getName() + "." + std::to_string(tickets[i].getCost()) + "." + tickets[i].getID();
+            std::string line = tickets[i].getName() + "," + std::to_string(tickets[i].getCost()) + "," + tickets[i].getID();
             File << line << std::endl;
         }
     }
@@ -396,8 +396,27 @@ public:
         std::fstream File(FileName, std::ios::in);
 
         if (!File.is_open()) {
-
+            std::cout << "File called " << FileName << " doesn't exist" << std::endl;
+            return Database<Ticket>(std::vector<Ticket>{}, "Ticket Database", FileName);
         }
+
+        std::string line;
+        std::vector <Ticket> tickets;
+
+
+        while (std::getline(File, line)) {
+
+            int index = 0;
+
+            std::string ticketName = DatabaseUtilities::lineReader(line, index);
+            double ticketCost = std::stod(DatabaseUtilities::lineReader(line, index));
+            std::string ticketID = DatabaseUtilities::lineReader(line, index);
+
+
+            tickets.push_back(Ticket(ticketName, ticketID, ticketCost));
+        }
+
+        return Database<Ticket>(tickets, "Ticket Database", FileName);
     }
 };
 

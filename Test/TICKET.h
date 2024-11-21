@@ -9,6 +9,9 @@ private:
 	std::string ticketID;
 public:
 
+	Ticket(std::string name, std::string ID, double cost) : Purchase(name, cost), ticketID(ID) {}
+	Ticket() {}
+
 	std::string getID() {
 		return ticketID;
 	}
