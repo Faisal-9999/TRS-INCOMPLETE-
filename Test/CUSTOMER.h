@@ -10,7 +10,7 @@
 #include "PURCHASE.h"
 
 class Customer : public Person {
-private:
+protected:
 
     int ticketsBought;
     bool currentTicketHolder;
@@ -27,7 +27,6 @@ public:
         : Person(name, age, ID), eventsAttended(eventsAttended), purchaseHistory(purchaseHistory) {}
 
     Customer() {}
-
     
     std::vector<Event> getEventsAttended() {
         return eventsAttended;
@@ -85,7 +84,7 @@ public:
 
     }
 
-    void DisplayInfo() override {
+    void displayInfo() override {
 
     }
 

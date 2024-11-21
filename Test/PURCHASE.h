@@ -3,34 +3,25 @@
 
 #include <iostream>
 
-class Purchase {
-private:
+class Purchase : public Entity {
+protected:
 
-   std::string purchaseName;
    double purchaseCost;
 
 public:
 
     Purchase(std::string purchaseName, double purchaseCost)
-        : purchaseName(purchaseName), purchaseCost(purchaseCost)
+        : Entity(purchaseName), purchaseCost(purchaseCost)
 
     {}
 
     Purchase() {}
 
-    void setPurchaseName(std::string purchaseName) {
-        this->purchaseName = purchaseName;
-    }
-
-    std::string getPurchaseName() const {
-        return purchaseName;
-    }
-
-    void setPurchaseCost(double purchaseCost) {
+    void setCost(double purchaseCost) {
         this->purchaseCost = purchaseCost;
     }
 
-    double getPurchaseCost() const {
+    double getCost() const {
         return purchaseCost;
     }
 };

@@ -3,16 +3,24 @@
 
 #include <iostream>
 
-class Admin {
-
+class Admin : public Entity {
 private:
 
 	const std::string password = "1234";
 
 public:
-	~Admin() {
-		std::cout << "\n\n-----ADMIN LOGGING OUT-----\n\n";
+	Admin() {
+		std::cout << "\n\n-----ADMIN LOGGING IN-----" << std::endl;
 	}
+	~Admin() {
+		std::cout << "\n\n-----ADMIN LOGGING OUT-----" << std::endl;
+	}
+
+	bool login(std::string password) {
+		return (this->password == password ? true : false);
+	}
+
+	void addNew
 
 };
 

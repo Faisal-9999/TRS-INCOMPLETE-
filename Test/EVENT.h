@@ -4,30 +4,21 @@
 #include <iostream>
 
 
-class Event {
+class Event : public Entity {
 private:
 
-	std::string eventName;
 	std::string eventDate;
 
 public:
 
 	Event(std::string eventName, std::string eventDate)
-		: eventName(eventName), eventDate(eventDate)
+		: Entity(eventName), eventDate(eventDate)
 	{}
 
 	Event() {}
 
-	std::string getEventName() {
-		return eventName;
-	}
-
 	std::string getEventDate() {
 		return eventDate;
-	}
-
-	void setEventName() {
-		this->eventName = eventName;
 	}
 
 	void setEventData() {

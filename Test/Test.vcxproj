@@ -134,6 +134,7 @@
     <ClInclude Include="ADMIN.h" />
     <ClInclude Include="CUSTOMER.h" />
     <ClInclude Include="DATABASE.h" />
+    <ClInclude Include="ENTITY.h" />
     <ClInclude Include="EVENT.h" />
     <ClInclude Include="FOOD.h" />
     <ClInclude Include="PERSON.h" />

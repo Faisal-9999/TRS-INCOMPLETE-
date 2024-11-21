@@ -7,6 +7,7 @@
 
 #include "PERSON.h"
 #include "FOOD.h"
+#include "DATABASE.h"
 
 class Staff : public Person {
 protected:
@@ -37,7 +38,7 @@ public:
         return role;
     }
 
-    void DisplayInfo() override {
+    void displayInfo() override {
         
     }
 };
@@ -62,7 +63,7 @@ public:
     void addNewItem() {};
     void removeItem() {};
 
-    void DisplayInfo() override {
+    void displayInfo() override {
 
     }
 
@@ -77,36 +78,28 @@ public:
     };
 
     Manager() {};
-
-    void fireEmployee() {
-
-    }
-
-    void addEmployee() {
+    
+    void fireEmployee(const Staff& staff, Database<Staff>& database) {
 
     }
 
-    void changeEmployeeRole() {
+    void changeEmployeeRole(const Staff& staff) {
 
     }
 
-    void changeEmployeeSalary() {
+    void changeEmployeeSalary(const Staff& staff) {
 
     }
 
-    void checkItemsSold() {
+    void checkItemsSold(const FoodVendor& vendor) {
 
     }
 
-    void createEvent() {
+    void viewEmployees(const Database<Staff>& database) {
 
     }
 
-    void viewEmployees() {
-
-    }
-
-    void DisplayInfo() override {
+    void displayInfo() override {
 
     }
 
@@ -121,7 +114,7 @@ public:
 
     Janitor() {};
 
-    void DisplayInfo() override {
+    void displayInfo() override {
 
     }
 };

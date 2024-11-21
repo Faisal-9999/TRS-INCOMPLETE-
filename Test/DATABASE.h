@@ -17,7 +17,7 @@ template<typename T>
 //Review DATABASE CODE AND ADAPT FOR THE CLASSES
 
 class Database {
-private:
+protected:
 
     std::vector<T> database;
     std::string FileName;
@@ -25,7 +25,7 @@ private:
 
 public:
 
-    Database(const std::vector<T>& database,const std::string& databaseName, const std::string& FileName) 
+    Database(const std::vector<T>& database, const std::string& databaseName, const std::string& FileName) 
         : database(database), FileName(FileName), databaseName(databaseName) {}
 
     Database() {}
@@ -68,10 +68,12 @@ public:
     }
 
     void printDatabase() {
+
         std::cout << "\n\n-----" << database.databaseName << std::endl;
+
         for (int i = 0; i < database.size(); i++) {
             std::cout << i + 1 << "#: \n\n";
-            database[i].DisplayInfo();
+            database[i].displayInfo();
         }
     }
 
@@ -218,10 +220,10 @@ public:
 
             for (int i = 0; i < cust.getEventsAttended().size(); i++) {
                 if (i == 0 || i == cust.getEventsAttended().size() - 1) {
-                    line += cust.getEventsAttended()[i].getEventName() + "." + cust.getEventsAttended()[i].getEventDate();
+                    line += cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
                 }
                 
-                line += "," + cust.getEventsAttended()[i].getEventName() + "." + cust.getEventsAttended()[i].getEventDate();
+                line += "," + cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
             }
 
             File << line << std::endl;
@@ -229,11 +231,12 @@ public:
             line.clear();
 
             for (int i = 0; i < cust.getPurchaseHistory().size(); i++) {
+
                 if (i == 0 || i == cust.getPurchaseHistory().size() - 1) {
-                    line += cust.getPurchaseHistory()[i].getPurchaseName() + "." + std::to_string(cust.getPurchaseHistory()[i].getPurchaseCost());
+                    line += cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
                 }
 
-                line += "," + cust.getPurchaseHistory()[i].getPurchaseName() + "." + std::to_string(cust.getPurchaseHistory()[i].getPurchaseCost());
+                line += "," + cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
             }
 
             File << line << std::endl;

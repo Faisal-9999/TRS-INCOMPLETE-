@@ -2,25 +2,29 @@
 #define FOOD_H
 
 #include <iostream>
-#include "UserInputHandler.h"
 
-class Food {
+
+class Food : public Purchase {
 private:
 
 	int price;
-	std::string name;
 
 public:
 
-	Food(std::string name, int price)  : name(name), price(price) {}
+	Food(std::string name, int price)  : Purchase(name, price) {}
 	Food() {}
 	
-	std::string getName() const {
-		return name;
-	}
-
 	int getPrice() const {
 		return price;
+	}
+
+	void setPrice(int price) {
+		if (price <= 0) {
+			std::cout << "Invalid price, Can't be 0 or any lesser value";
+			return;
+		}
+
+		this->price = price;
 	}
 
 };

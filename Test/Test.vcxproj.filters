@@ -53,5 +53,8 @@
     <ClInclude Include="PURCHASE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ENTITY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

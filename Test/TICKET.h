@@ -2,8 +2,9 @@
 #define TICKET_H
 
 #include <iostream>
+#include "ENTITY.h"
 
-class Ticket {
+class Ticket : public Purchase {
 
 };
 
