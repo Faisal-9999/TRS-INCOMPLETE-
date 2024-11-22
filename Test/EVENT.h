@@ -21,7 +21,7 @@ public:
 		return eventDate;
 	}
 
-	void setEventData() {
+	void setEventDate() {
 		this->eventDate = eventDate;
 	}
 };

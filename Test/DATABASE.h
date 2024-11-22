@@ -68,6 +68,18 @@ public:
     }
 
     void printDatabase() {
+        std::cout << "\n\n-----" << database.databaseName << std::endl;
+
+        for (int i = 0; i < database.size(); i++) {
+            std::cout << i + 1 << "#: \n\n";
+            database[i].getName();
+            std::cout << std::endl;
+        }
+
+        std::cout << std::endl;
+    }
+
+    void printDatabaseDetails() {
 
         std::cout << "\n\n-----" << database.databaseName << std::endl;
 
@@ -229,21 +241,22 @@ public:
                 if (i == 0 || i == cust.getEventsAttended().size() - 1) {
                     line += cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
                 }
-                
-                line += "," + cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
+                else {
+                    line += "," + cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
+                }
             }
 
             File << line << std::endl;
-
-            line.clear();
 
             for (int i = 0; i < cust.getPurchaseHistory().size(); i++) {
 
                 if (i == 0 || i == cust.getPurchaseHistory().size() - 1) {
                     line += cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
                 }
+                else {
 
-                line += "," + cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
+                    line += "," + cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
+                }
             }
 
             File << line << std::endl;
@@ -430,10 +443,44 @@ public:
 
     static void saveDatabase(Database<Event>& database) {
 
+        std::fstream File(database.getFileName(), std::ios::out);
+
+        if (!File.is_open()) {
+            std::cout << "File callled " << database.getFileName() << " doesn't exist" << std::endl;
+            std::cout << "Creating File..." << std::endl;
+        }
+
+        std::vector<Event> Events = database.getDatabase();
+
+        for (Event& event : Events) {
+            File << event.getName() << "," << event.getEventDate() << std::endl;
+        }
+
     }
 
-    static Database<Event> loadDatabase() {
+    static Database<Event> loadDatabase(const std::string FileName) {
 
+        std::fstream File(FileName, std::ios::in);
+
+        if (!File.is_open()) {
+            std::cout << "File called " << FileName << " doesn't exist" << std::endl;
+            return Database<Event>(std::vector<Event>(), "Event Database", FileName);
+        }
+
+        std::string line;
+        std::vector<Event> events;
+
+        while (std::getline(File, line)) {
+
+            int index = 0;
+
+            std::string eventName = DatabaseUtilities::lineReader(line, index);
+            std::string eventDate = DatabaseUtilities::lineReader(line, index);
+
+            events.push_back(Event(eventName, eventDate));
+        }
+
+        return Database<Event>(events, "Event Database", FileName);
     }
 };
 
