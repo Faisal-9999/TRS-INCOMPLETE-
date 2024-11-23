@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "PURCHASE.h"
 
 class Food : public Purchase {
 private:

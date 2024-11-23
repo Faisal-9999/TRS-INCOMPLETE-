@@ -17,7 +17,7 @@ public:
 
     {}
 
-    Purchase() {}
+    Purchase() : purchaseCost(0) {}
 
     void setCost(double purchaseCost) {
         this->purchaseCost = purchaseCost;

@@ -26,11 +26,20 @@ private:
 public:
 
     Database(const std::vector<T>& database, const std::string& databaseName, const std::string& FileName) 
-        : database(database), FileName(FileName), databaseName(databaseName) {}
+        : database(database), FileName(FileName), databaseName(databaseName) 
+    {}
 
     Database() {}
 
     void add(const T& item) {
+
+        auto index = std::find(database.begin(), database.end(), item);
+
+        if (index != database.end()) {
+            std::cout << "Can't be added already exists in database";
+            return;
+        }
+
         database.push_back(item);
         std::cout << "\n\n " << item.getName() << " added to database\n\n";
     }
@@ -55,19 +64,21 @@ public:
  
     }
 
-    void wipeDatabase() {
+    void wipe() {
+
         if (database.empty()) {
             std::cout << "\n\nDatabase is already empty. Can't Wipe.\n\n";
+            return;
         }
-        else {
-            database.clear();
-            database.shrink_to_fit();
+        
+        database.clear();
+        database.shrink_to_fit();
 
-            std::cout << "Wiped databased called " << database.databaseName << std::endl;
-        }
+        std::cout << "Wiped databased called " << database.databaseName << std::endl;
     }
 
-    void printDatabase() {
+    void print() {
+
         std::cout << "\n\n-----" << database.databaseName << std::endl;
 
         for (int i = 0; i < database.size(); i++) {
@@ -79,7 +90,7 @@ public:
         std::cout << std::endl;
     }
 
-    void printDatabaseDetails() {
+    void printDetails() {
 
         std::cout << "\n\n-----" << database.databaseName << std::endl;
 
@@ -90,6 +101,13 @@ public:
         }
 
         std::cout << std::endl;
+    }
+
+    bool isEmpty() {
+        if (database.empty())
+            return true; 
+        else
+            return false;
     }
 
     void setFileName(std::string FileName) {
@@ -164,9 +182,10 @@ public:
 
         std::fstream File(database.getFileName(), std::ios::out);
 
-        if (!File.is_open()) {
-            std::cout << "\n\nFile called " << database.getFileName() << " doesn't exist" << std::endl;
-            File.open(database.getFileName(), std::ios::out);
+        if (database.isEmpty()) {
+            std::cout << "\n\n" << database.getDatabaseName() << " is empty" << std::endl;
+            std::cout << "Can't save datavase" << std::endl;
+            return;
         }
 
         for (Staff& staff : database.getDatabase()) {
@@ -224,10 +243,10 @@ public:
 
         std::fstream File(database.getFileName(), std::ios::out );
 
-        if (!File.is_open()) {
-            std::cout << "\n\nFile called " << database.getFileName() << " doesn't exist" << std::endl;
-            std::cout << "Crreating File..." << std::endl;
-            File.open(database.getFileName(), std::ios::out);
+        if (database.isEmpty()) {
+            std::cout << "\n\n" << database.getDatabaseName() << " is empty" << std::endl;
+            std::cout << "Can't save datavase" << std::endl;
+            return;
         }
 
         for (Customer& cust : database.getDatabase()) {
@@ -391,10 +410,10 @@ public:
     static void saveDatabase(Database<Ticket>& database) {
         std::fstream File(database.getFileName(), std::ios::in);
 
-        if (!File.is_open()) {
-            std::cout << "File called " << database.getFileName() << " doesn't exist" << std::endl;
-            std::cout << "Creating File..." << std::endl;
-            File.open(database.getFileName(), std::ios::out);
+        if (database.isEmpty()) {
+            std::cout << "\n\n" << database.getDatabaseName() << " is empty" << std::endl;
+            std::cout << "Can't save datavase" << std::endl;
+            return;
         }
 
         std::vector<Ticket> tickets = database.getDatabase();
@@ -445,9 +464,10 @@ public:
 
         std::fstream File(database.getFileName(), std::ios::out);
 
-        if (!File.is_open()) {
-            std::cout << "File callled " << database.getFileName() << " doesn't exist" << std::endl;
-            std::cout << "Creating File..." << std::endl;
+        if (database.isEmpty()) {
+            std::cout << "\n\n" << database.getDatabaseName() << " is empty" << std::endl;
+            std::cout << "Can't save datavase" << std::endl;
+            return;
         }
 
         std::vector<Event> Events = database.getDatabase();

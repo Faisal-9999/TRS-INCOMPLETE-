@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "ENTITY.h"
 
 class Event : public Entity {
 private:

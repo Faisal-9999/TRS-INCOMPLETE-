@@ -2,37 +2,55 @@
 #include <random>
 #include <string>
 #include <stdexcept>
-using namespace std;
 
-string StringInput(string characteristic) {
+std::string StringInput(std::string characteristic) {
 
-    string input;
+    std::string input;
 
-    cout << "\n\nEnter " << characteristic << ": ";
-    getline(cin, input);
+    while (true){
+        bool invalidCharacter = false;
+        std::cout << "\nEnter " << characteristic << ": ";
+        std::getline(std::cin, input);
+
+        for (char& a : input) {
+            if (a == '.' || a == ',') {
+                invalidCharacter = true;
+                break;
+            }
+        }
+
+        if (invalidCharacter) {
+            std::cout << "Input failed. Can't contain characters ',' and '.'" << std::endl;
+            std::cout << "TRY AGAIN." << std::endl;
+            continue;
+        }
+        else {
+            break;
+        }
+    }
 
     return input;
 }
 
-int IntegerInput(string characteristic) {
+int IntegerInput(std::string characteristic) {
 
     int input;
 
     while (true)
     {
-        cout << "Enter " << characteristic << ": ";
-        cin >> input;
+        std::cout << "Enter " << characteristic << ": ";
+        std::cin >> input;
 
-        if (cin.fail()) {
-            cout << "\n\nERROR: ENTER A VALID INTEGER\n\n";
+        if (std::cin.fail()) {
+            std::cout << "\n\nERROR: ENTER A VALID INTEGER\n\n";
 
-            cin.clear();
+            std::cin.clear();
 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else {
 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             break;
         }
@@ -41,25 +59,25 @@ int IntegerInput(string characteristic) {
     return input;
 }
 
-double DoubleInput(string characteristic) {
+double DoubleInput(std::string characteristic) {
     double input;
 
 
     while (true)
     {
-        cout << "Enter " << characteristic << ": ";
-        cin >> input;
+        std::cout << "Enter " << characteristic << ": ";
+        std::cin >> input;
 
-        if (cin.fail()) {
-            cout << "\n\nERROR: ENTER A VALID INTEGER\n\n";
+        if (std::cin.fail()) {
+            std::cout << "\n\nERROR: ENTER A VALID INTEGER\n\n";
 
-            cin.clear();
+            std::cin.clear();
 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else {
 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             break;
         }
@@ -68,15 +86,15 @@ double DoubleInput(string characteristic) {
     return input;
 }
 
-string randomIDGenerator() {
+std::string randomIDGenerator() {
 
-    const string UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const string NUMS = "0123456789";
+    const std::string UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const std::string NUMS = "0123456789";
 
-    random_device rand;
-    mt19937 gen(rand());
+    std::random_device rand;
+    std::mt19937 gen(rand());
 
-    uniform_int_distribution<> dist(0, NUMS.size() - 1);
+    std::uniform_int_distribution<> dist(0, NUMS.size() - 1);
 
     char ID[9];
 
@@ -90,7 +108,7 @@ string randomIDGenerator() {
         }
     }
 
-    uniform_int_distribution<> dist2(0, UPPERCASE.size() - 1);
+    std::uniform_int_distribution<> dist2(0, UPPERCASE.size() - 1);
 
     for (int i = 3; i < 8; i++) {
         ID[i] = UPPERCASE[dist2(gen)];
@@ -98,5 +116,5 @@ string randomIDGenerator() {
 
     ID[8] = '\0';
 
-    return string(ID);
+    return std::string(ID);
 }

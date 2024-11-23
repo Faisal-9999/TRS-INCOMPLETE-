@@ -5,12 +5,12 @@
 #include <vector>
 #include <unordered_map>
 
-#include "PERSON.h"
-#include "FOOD.h"
-#include "DATABASE.h"
+template<typename T>
+class Database;
 
 class Staff : public Person {
 protected:
+
     double salary;
     std::string role;
 
@@ -79,10 +79,6 @@ public:
 
     Manager() {};
     
-    void fireEmployee(const Staff& staff, Database<Staff>& database) {
-
-    }
-
     void changeEmployeeRole(const Staff& staff) {
 
     }
@@ -91,12 +87,13 @@ public:
 
     }
 
-    void checkItemsSold(const FoodVendor& vendor) {
+    void checkItemsSold(FoodVendor& vendor) {
 
     }
 
-    void viewEmployees(const Database<Staff>& database) {
-
+    template<typename T>
+    void viewEmployees(Database<T>& database) {
+        database.print();
     }
 
     void displayInfo() override {
