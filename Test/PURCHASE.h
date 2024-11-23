@@ -20,6 +20,11 @@ public:
     Purchase() : purchaseCost(0) {}
 
     void setCost(double purchaseCost) {
+        if (purchaseCost > 0) {
+            std::cout << "Invalid Number" << std::endl;
+            return;
+        }
+
         this->purchaseCost = purchaseCost;
     }
 

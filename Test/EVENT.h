@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "ENTITY.h"
+#include "UserInputHandler.h"
 
 class Event : public Entity {
 private:
@@ -28,6 +29,12 @@ public:
 };
 
 class EventCreator {
+private:
+	EventCreator() {}
 
+public:
+	static Event createEvent() {
+		return Event(StringInput("Event Name"), StringInput("Event Date"));
+	}
 };
 #endif

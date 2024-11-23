@@ -22,7 +22,6 @@ std::string StringInput(std::string characteristic) {
         if (invalidCharacter) {
             std::cout << "Input failed. Can't contain characters ',' and '.'" << std::endl;
             std::cout << "TRY AGAIN." << std::endl;
-            continue;
         }
         else {
             break;

@@ -138,21 +138,4 @@ public:
     }
 };
 
-class StaffSaverLoader {
-public:
-
-    static Janitor loadJanitor(std::string name, std::string password) {
-        
-    }
-
-    static Manager loadManager(std::string name, std::string password) {
-        Manager man;
-    }
-
-    static FoodVendor loadVendor(std::string name, std::string password) {
-        FoodVendor Ven;
-    }
-};
-
-
 #endif

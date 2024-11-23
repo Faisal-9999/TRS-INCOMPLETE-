@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "PURCHASE.h"
+#include "UserInputHandler.h"
 
 class Ticket : public Purchase {
 private:
@@ -21,7 +22,13 @@ public:
 };
 
 class TicketCreator {
-
+private:
+	TicketCreator() {}
+public:
+	
+	static Ticket createTicket() {
+		return Ticket(StringInput("Ticket Name"), randomIDGenerator(), DoubleInput("Ticket Price"));
+	}
 };
 
 

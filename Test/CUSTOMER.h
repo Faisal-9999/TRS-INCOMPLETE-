@@ -95,18 +95,12 @@ public:
 class VIPCustomer : public Customer {
 public:
 
-};
-
-class NormalCustomer : public Customer {
+    void 
 
 };
 
 class CustomerCreator {
 private:
-
-};
-
-class CustomerSaverLoader {
 
 };
 

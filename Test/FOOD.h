@@ -31,6 +31,8 @@ public:
 };
 
 class FoodCreator {
+private:
+	FoodCreator() {};
 public:
 	static Food createFood() {
 		return Food(StringInput("Food Name: "), IntegerInput("Food Price"));
