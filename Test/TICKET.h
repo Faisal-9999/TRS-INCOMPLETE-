@@ -14,6 +14,10 @@ public:
 		: Purchase(name, cost), ticketID(ID) 
 	{}
 
+	Ticket(const Ticket& ticket)
+		: Purchase(ticket.name, ticket.purchaseCost), ticketID(ticket.ticketID)
+	{}
+
 	Ticket() {}
 
 	std::string getID() {

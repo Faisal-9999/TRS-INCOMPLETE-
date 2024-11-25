@@ -13,7 +13,6 @@ class Customer : public Person {
 protected:
 
     int ticketsBought;
-    bool currentTicketHolder;
     double amountSpent;
     std::string currentTicketType;
     std::vector <Event> eventsAttended;
@@ -22,9 +21,13 @@ protected:
 
 public:
 
-    Customer(const std::string name, const int age, const std::string ID,
-        std::vector<Event> eventsAttended, std::vector<Purchase> purchaseHistory) 
-        : Person(name, age, ID), eventsAttended(eventsAttended), purchaseHistory(purchaseHistory) {}
+    Customer(const std::string name, const int age, const std::string ID, std::vector<Event> eventsAttended, std::vector<Purchase> purchaseHistory) 
+        : Person(name, age, ID), eventsAttended(eventsAttended), purchaseHistory(purchaseHistory) 
+    {}
+
+    Customer(const Customer& customer) 
+        : Person(customer.name, customer.age, customer.ID), eventsAttended(customer.eventsAttended), purchaseHistory(customer.purchaseHistory)
+    {}
 
     Customer() {}
     
@@ -91,11 +94,37 @@ public:
 
 };
 
+class NormalCustomer : public Customer {
+public:
+
+    NormalCustomer(std::string name, int age, std::string ID, std::vector<Event> eventsAttended, std::vector<Purchase> purchaseHistory) 
+        : Customer(name, age, ID, eventsAttended, purchaseHistory)
+    {}
+
+    NormalCustomer(const NormalCustomer& normal) 
+        : Customer(normal) 
+    {}
+
+    NormalCustomer() {}
+};
+
 
 class VIPCustomer : public Customer {
 public:
 
-    void 
+    VIPCustomer(std::string name, int age, std::string ID, std::vector<Event> eventsAttended, std::vector<Purchase> purchaseHistory)
+        : Customer(name, age, ID, eventsAttended, purchaseHistory)
+    {}
+
+    VIPCustomer(const VIPCustomer& VIP) 
+        : Customer(VIP) 
+    {}
+
+    VIPCustomer() {}
+
+    void getPremium() {
+
+    }
 
 };
 

@@ -17,8 +17,12 @@ protected:
 public:
 
     Staff(const std::string name, const int age, const std::string EmployeeID, const double salary, const std::string role)
-        : salary(salary), role(role), Person(name, age, EmployeeID) {
-    };
+        : salary(salary), role(role), Person(name, age, EmployeeID) 
+    {}
+
+    Staff(const Staff& staff) 
+        : salary(staff.salary), role(staff.role), Person(staff.name, staff.age, staff.ID)
+    {}
 
     Staff() {};
 

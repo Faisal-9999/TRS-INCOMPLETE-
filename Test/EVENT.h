@@ -17,6 +17,10 @@ public:
 		: Entity(eventName), eventDate(eventDate)
 	{}
 
+	Event(const Event& event)
+		: Entity(event.name), eventDate(eventDate)
+	{}
+
 	Event() {}
 
 	std::string getEventDate() {

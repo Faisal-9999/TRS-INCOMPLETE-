@@ -14,19 +14,20 @@
 
 template<typename T>
 
-//Review DATABASE CODE AND ADAPT FOR THE CLASSES
+//MAJOR CHANGES TO BE IMPLEMENETED TO ACCOUNT FOR POINTER TO BASE CLASS ARRAY FOR STORING CHILD OBJECTS
+//ESPECIALLY TO EVERY LOAD FUNCTION
 
 class Database {
 private:
 
-    std::vector<T> database;
+    std::vector<T*> database;
     std::string FileName;
     std::string databaseName;
 
 public:
 
     Database(const std::vector<T>& database, const std::string& databaseName, const std::string& FileName) 
-        : database(database), FileName(FileName), databaseName(databaseName) 
+        : database(&database), FileName(FileName), databaseName(databaseName) 
     {}
 
     Database() {}
@@ -40,7 +41,7 @@ public:
             return;
         }
 
-        database.push_back(item);
+        database.push_back(new T(item));
         std::cout << "\n\n " << item.getName() << " added to database\n\n";
     }
 
@@ -51,17 +52,19 @@ public:
             return;
         }
 
-        auto index = std::find(database.begin(), database.end(), item);
+        int index = 0;
 
-        if (index != database.end()) {
+        for (const T* data : database) {
+            if ((*data).getName() == item.getName()) {
+                std::cout << "DELETING " << item.getName() << " from database" << std::endl;
+                delete data;
+                database.erase(database.begin() + index);
+                return;
+            }
+            index++;
+        }
 
-            database.erase(index);
-            std::cout << "\n\nRemoved " << item.getName() << " from the database\n\n";
-        }
-        else {
-            std::cout << "\n\n" << item.getName() << " doesn't exist in the database\n\n";
-        }
- 
+        std::cout << item.getName() << " isn't available in the database can't remove it\n\n";
     }
 
     void wipe() {
@@ -71,6 +74,10 @@ public:
             return;
         }
         
+        for (int i = 0; i < database.size(); i++) {
+            delete database[i];
+        }
+
         database.clear();
         database.shrink_to_fit();
 
@@ -83,8 +90,7 @@ public:
 
         for (int i = 0; i < database.size(); i++) {
             std::cout << i + 1 << "#: \n\n";
-            database[i].getName();
-            std::cout << std::endl;
+            std::cout << database[i]->getName() << std::endl;
         }
 
         std::cout << std::endl;
@@ -96,7 +102,7 @@ public:
 
         for (int i = 0; i < database.size(); i++) {
             std::cout << i + 1 << "#: \n\n";
-            database[i].displayInfo();
+            database[i]->displayInfo();
             std::cout << std::endl;
         }
 
@@ -115,7 +121,12 @@ public:
     }
 
     void setDatabase(std::vector<T> database) {
-        this->database = database;
+        this->database.clear();
+        this->database.shrink_to_fit();
+
+        for (const auto& element : database) {
+            this->database.push_back(new T(element));
+        }
     }
 
     void setDatabaseName(std::string databaseName) {
@@ -130,7 +141,7 @@ public:
         return FileName;
     }
 
-    std::vector <T> getDatabase() {
+    std::vector <T*> getDatabase() {
         return database;
     }
 };
@@ -188,9 +199,9 @@ public:
             return;
         }
 
-        for (Staff& staff : database.getDatabase()) {
+        for (Staff* staff : database.getDatabase()) {
             //line format is name, password, ID, age, salary,
-            std::string line = staff.getName() + "," + staff.getPassword() + "," + staff.getID() + "," + std::to_string(staff.getAge()) + "," + std::to_string(staff.getEmployeeSalary()) + "," + staff.getRole();
+            std::string line = staff->getName() + "," + staff->getPassword() + "," + staff->getID() + "," + std::to_string(staff->getAge()) + "," + std::to_string(staff->getEmployeeSalary()) + "," + staff->getRole();
             File << line << std::endl;
         }
     }
@@ -249,32 +260,32 @@ public:
             return;
         }
 
-        for (Customer& cust : database.getDatabase()) {
+        for (Customer* cust : database.getDatabase()) {
 
-            std::string line = cust.getName() + "," + cust.getPassword() + "," + cust.getID() + "," + std::to_string(cust.getAge()) + ",";
+            std::string line = cust->getName() + "," + cust->getPassword() + "," + cust->getID() + "," + std::to_string(cust->getAge()) + ",";
             File << line << std::endl;
 
             line.clear();
 
-            for (int i = 0; i < cust.getEventsAttended().size(); i++) {
-                if (i == 0 || i == cust.getEventsAttended().size() - 1) {
-                    line += cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
+            for (int i = 0; i < cust->getEventsAttended().size(); i++) {
+                if (i == 0 || i == cust->getEventsAttended().size() - 1) {
+                    line += cust->getEventsAttended()[i].getName() + "." + cust->getEventsAttended()[i].getEventDate();
                 }
                 else {
-                    line += "," + cust.getEventsAttended()[i].getName() + "." + cust.getEventsAttended()[i].getEventDate();
+                    line += "," + cust->getEventsAttended()[i].getName() + "." + cust->getEventsAttended()[i].getEventDate();
                 }
             }
 
             File << line << std::endl;
 
-            for (int i = 0; i < cust.getPurchaseHistory().size(); i++) {
+            for (int i = 0; i < cust->getPurchaseHistory().size(); i++) {
 
-                if (i == 0 || i == cust.getPurchaseHistory().size() - 1) {
-                    line += cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
+                if (i == 0 || i == cust->getPurchaseHistory().size() - 1) {
+                    line += cust->getPurchaseHistory()[i].getName() + "." + std::to_string(cust->getPurchaseHistory()[i].getCost());
                 }
                 else {
 
-                    line += "," + cust.getPurchaseHistory()[i].getName() + "." + std::to_string(cust.getPurchaseHistory()[i].getCost());
+                    line += "," + cust->getPurchaseHistory()[i].getName() + "." + std::to_string(cust->getPurchaseHistory()[i].getCost());
                 }
             }
 
@@ -416,10 +427,10 @@ public:
             return;
         }
 
-        std::vector<Ticket> tickets = database.getDatabase();
+        std::vector<Ticket*> tickets = database.getDatabase();
 
         for (int i = 0; i < tickets.size(); i++) {
-            std::string line = tickets[i].getName() + "," + std::to_string(tickets[i].getCost()) + "," + tickets[i].getID();
+            std::string line = tickets[i]->getName() + "," + std::to_string(tickets[i]->getCost()) + "," + tickets[i]->getID();
             File << line << std::endl;
         }
     }
@@ -470,10 +481,10 @@ public:
             return;
         }
 
-        std::vector<Event> Events = database.getDatabase();
+        std::vector<Event*> Events = database.getDatabase();
 
-        for (Event& event : Events) {
-            File << event.getName() << "," << event.getEventDate() << std::endl;
+        for (Event* event : Events) {
+            File << event->getName() << "," << event->getEventDate() << std::endl;
         }
 
     }
