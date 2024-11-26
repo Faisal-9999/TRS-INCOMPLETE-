@@ -14,7 +14,7 @@
 
 template<typename T>
 
-//MAJOR CHANGES TO BE IMPLEMENETED TO ACCOUNT FOR POINTER TO BASE CLASS ARRAY FOR STORING CHILD OBJECTS
+//MAJOR CHANGES TO BE IMPLEMENETED TO ACCOUNT FOR POINTER TO BASE
 //ESPECIALLY TO EVERY LOAD FUNCTION
 
 class Database {
@@ -26,7 +26,7 @@ private:
 
 public:
 
-    Database(const std::vector<T>& database, const std::string& databaseName, const std::string& FileName) 
+    Database(const std::vector<T*>& database, const std::string& databaseName, const std::string& FileName) 
         : database(&database), FileName(FileName), databaseName(databaseName) 
     {}
 
@@ -110,10 +110,7 @@ public:
     }
 
     bool isEmpty() {
-        if (database.empty())
-            return true; 
-        else
-            return false;
+        return (database.empty() ? true : false);
     }
 
     void setFileName(std::string FileName) {
@@ -212,10 +209,10 @@ public:
 
         if (!File.is_open()) {
             std::cout << "\n\nFile called " << FileName << " doesn't exist" << std::endl;
-            return Database<Staff>(std::vector<Staff>{}, "Staff Database", FileName);
+            return Database<Staff>(std::vector<Staff*>{}, "Staff Database", FileName);
         }
 
-        std::vector<Staff> employeeDatabase;
+        std::vector<Staff*> employeeDatabase;
         std::string line;
 
         while (std::getline(File, line)) {
@@ -232,7 +229,7 @@ public:
             Staff staff(name, age, ID, salary, role);
             staff.setPassword(password);
 
-            employeeDatabase.push_back(staff);
+            employeeDatabase.push_back(new Staff(staff));
         }
 
         return Database<Staff>(employeeDatabase, "Staff Database", FileName);
@@ -299,10 +296,10 @@ public:
 
         if (!File.is_open()) {
             std::cout << "\n\nFile called " << FileName << " doesn't exist" << std::endl;
-            return Database<Customer>(std::vector<Customer>{}, "Customer Database", FileName);
+            return Database<Customer>(std::vector<Customer*>{}, "Customer Database", FileName);
         }
 
-        std::vector<Customer> customerDatabase;
+        std::vector<Customer*> customerDatabase;
         std::vector<Event> eventsAttended;
         std::vector<Purchase> purchaseHistory;
         std::string line;
@@ -401,7 +398,7 @@ public:
                 index++;
             }
 
-            customerDatabase.push_back(cust);
+            customerDatabase.push_back(new Customer(cust));
 
         }
 
@@ -436,15 +433,16 @@ public:
     }
 
     static Database<Ticket> loadDatabase(std::string& FileName) {
+
         std::fstream File(FileName, std::ios::in);
 
         if (!File.is_open()) {
             std::cout << "File called " << FileName << " doesn't exist" << std::endl;
-            return Database<Ticket>(std::vector<Ticket>{}, "Ticket Database", FileName);
+            return Database<Ticket>(std::vector<Ticket*>{}, "Ticket Database", FileName);
         }
 
         std::string line;
-        std::vector <Ticket> tickets;
+        std::vector <Ticket*> tickets;
 
 
         while (std::getline(File, line)) {
@@ -456,7 +454,7 @@ public:
             std::string ticketID = DatabaseUtilities::lineReader(line, index);
 
 
-            tickets.push_back(Ticket(ticketName, ticketID, ticketCost));
+            tickets.push_back(new Ticket(ticketName, ticketID, ticketCost));
         }
 
         return Database<Ticket>(tickets, "Ticket Database", FileName);
@@ -495,11 +493,11 @@ public:
 
         if (!File.is_open()) {
             std::cout << "File called " << FileName << " doesn't exist" << std::endl;
-            return Database<Event>(std::vector<Event>(), "Event Database", FileName);
+            return Database<Event>(std::vector<Event*>(), "Event Database", FileName);
         }
 
         std::string line;
-        std::vector<Event> events;
+        std::vector<Event*> events;
 
         while (std::getline(File, line)) {
 
@@ -508,7 +506,7 @@ public:
             std::string eventName = DatabaseUtilities::lineReader(line, index);
             std::string eventDate = DatabaseUtilities::lineReader(line, index);
 
-            events.push_back(Event(eventName, eventDate));
+            events.push_back(new Event(eventName, eventDate));
         }
 
         return Database<Event>(events, "Event Database", FileName);

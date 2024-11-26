@@ -141,6 +141,7 @@
     <ClInclude Include="PURCHASE.h" />
     <ClInclude Include="STAFF.h" />
     <ClInclude Include="TICKET.h" />
+    <ClInclude Include="TICKETBOOTH.h" />
     <ClInclude Include="UserInputHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

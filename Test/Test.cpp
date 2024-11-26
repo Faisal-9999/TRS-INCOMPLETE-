@@ -6,23 +6,7 @@
 #include "PERSON.h"
 #include "TICKET.h"
 #include "ADMIN.h"
-
-class TicketBooth {
-
-
-
-public:
-
-     TicketBooth() { std::cout << "-----STARTING SYSTEM-----\n\n"; };
-    ~TicketBooth() { std::cout << "\n\n-----EXITING SYSTEM-----"; };
-
-    void start() {
-        
-    }
-
-private:
-
-};
+#include "TICKETBOOTH.h"
 
 int main()
 {

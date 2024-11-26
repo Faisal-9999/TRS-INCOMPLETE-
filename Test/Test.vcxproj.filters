@@ -56,5 +56,8 @@
     <ClInclude Include="ENTITY.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TICKETBOOTH.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

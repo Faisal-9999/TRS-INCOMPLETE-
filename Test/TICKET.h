@@ -10,7 +10,7 @@ private:
 	std::string ticketID;
 public:
 
-	Ticket(std::string name, std::string ID, double cost) 
+	Ticket(const std::string name, const std::string ID, const double cost) 
 		: Purchase(name, cost), ticketID(ID) 
 	{}
 
